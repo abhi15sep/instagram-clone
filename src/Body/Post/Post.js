@@ -60,7 +60,7 @@ function Post({user,imgUrl,avatarUrl,username,caption,postId}) {
 
             {/* Post Image */}
             {(imgUrl.includes('.mp4')) ? 
-                (<embed type="video/webm" src={imgUrl} className='post__img post__video' />) : 
+                (<video type="video/webm" controls={true} src={imgUrl} autoPlay={true} loop={true} className='post__img post__video' />) : 
                 (<img 
                     className='post__img'
                     src={imgUrl}
