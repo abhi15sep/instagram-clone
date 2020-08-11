@@ -1,0 +1,45 @@
+.upload__bar {
+    margin: 0 auto 0;
+    width: 45vw;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #FAFAFA;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    border: 1px solid rgba(175, 175, 175, 0.411);
+}
+
+.progress_bar {
+    border-radius: 8px;
+    margin-top: 10px;
+    height: 6px;
+}
+
+.input__wrapper {
+    display: flex;
+
+}
+
+
+.upload__text {
+    flex: 1;
+    transform: translateY(-10px);
+    height: 25px;
+    transform: translateY(10px);
+}
+
+.sticky__barBot {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+}
+
+@media screen and (max-width: 675px) {
+    .upload__bar {
+        margin: auto;
+        min-width: 94vw;
+
+    }
+}
