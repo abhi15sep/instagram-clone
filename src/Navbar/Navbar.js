@@ -40,10 +40,6 @@ function Navbar({user, setUser}) {
         })
         .then(() => setOpen(false))
         .catch((err) => alert(err.message))
-
-        // auth.signInWithEmailAndPassword(email, password)
-        // .then(() => setOpenLogin(false))
-        // .catch((err) => alert(err.message))
     }
 
     const signIn = (e) => {
@@ -171,10 +167,10 @@ function Navbar({user, setUser}) {
                         Logout
                     </Button>
                     <Avatar 
-                        src=''
+                        src={''} //TODO: add profile picture
                         alt=''
                         style={{width: '32px', height: '32px'}}
-                    ></Avatar>
+                    >{String(user.displayName).slice(0,1).toUpperCase()}</Avatar>
                 </div>
                 ) : (
                 <ButtonGroup variant="contained" aria-label="contained primary button group">

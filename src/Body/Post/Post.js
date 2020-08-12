@@ -87,10 +87,15 @@ function Post({user,imgUrl,avatarUrl,username,caption,postId}) {
             {/* timestamp comment */}
             {/* comment form = input + postButton */}
             { user && (<form className='post__commentBox' onSubmit={postComment}>
+                <Avatar 
+                    src={avatarUrl||''}
+                    alt={username}
+                    className='comment__avatar'
+                >{String(user.displayName).slice(0,1).toUpperCase()}</Avatar>
                 <input
                     className='post__input'
                     type='text'
-                    placeholder='Add comment..'
+                    placeholder={`Comment as ${String(user.displayName)}...`}
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                 />
