@@ -1,12 +1,12 @@
 import firebase from 'firebase'
-
+import {API_KEY, DATABASE, STORAGE} from './note.js'
 
 const firebaseApp = firebase.initializeApp({
-    apiKey: "AIzaSyBY-5ZKGM0aH3Dv9qiwS03CSUzkrn7nK60",
+    apiKey: API_KEY,
     authDomain: "instagram-clone-84853.firebaseapp.com",
-    databaseURL: "https://instagram-clone-84853.firebaseio.com",
+    databaseURL: DATABASE,
     projectId: "instagram-clone-84853",
-    storageBucket: "instagram-clone-84853.appspot.com",
+    storageBucket: STORAGE,
     messagingSenderId: "853963345898",
     appId: "1:853963345898:web:4c91c13c02a62898862c93",
     measurementId: "G-4DF9348JTY"
