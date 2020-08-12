@@ -18,7 +18,8 @@ function Navbar({
     password, 
     setPassword, 
     email, 
-    setEmail
+    setEmail,
+    errorMessage
 }) {
 
 
@@ -76,6 +77,7 @@ function Navbar({
                                     />
                                 </Grid>
                             </Grid>
+                            {errorMessage ? <p style={{color: 'red'}}>{errorMessage}</p> : undefined}
                             <Button type='submit' className='modal__submit' variant="outlined" color="primary">
                                 Register
                             </Button>
@@ -124,6 +126,7 @@ function Navbar({
                                     />
                                 </Grid>
                             </Grid>
+                            {errorMessage ? <p style={{color: 'red'}}>{errorMessage}</p> : undefined}
                             <Button type='submit' className='modal__submit' variant="outlined" color="primary">
                                 Login
                             </Button>

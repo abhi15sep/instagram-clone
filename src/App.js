@@ -14,6 +14,7 @@ function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -40,7 +41,7 @@ function App() {
           })
       })
       .then(() => setOpen(false))
-      .catch((err) => alert(err.message))
+      .catch((err) => setErrorMessage(err.message))
   }
 
   // SIGN IN
@@ -48,7 +49,7 @@ function App() {
       e.preventDefault()
       auth.signInWithEmailAndPassword(email, password)
       .then(() => setOpenLogin(false))
-      .catch((err) => alert(err.message))
+      .catch((err) => setErrorMessage(err.message))
   }
 
   return (
@@ -68,6 +69,7 @@ function App() {
           setPassword={setPassword}
           email={email}
           setEmail={setEmail}
+          errorMessage={errorMessage}
         />
 
         {/* BODY => POST */}
