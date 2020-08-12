@@ -16,7 +16,7 @@ function Body({user}) {
                 post: doc.data()
             })))
         })
-    }, [])
+    }, [user])
 
     return (
         <div className='body'>

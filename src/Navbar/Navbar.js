@@ -1,53 +1,26 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import Logo from './instagramLogo.png'
 import './Navbar.css'
 import {Modal, Button, Grid, TextField, Fade, Backdrop, ButtonGroup, Avatar} from '@material-ui/core';
 import {AccountCircle, VpnKeyRounded, Email} from '@material-ui/icons';
 import { auth } from '../firebase';
 
-function Navbar({user, setUser}) {
+function Navbar({
+    user, 
+    signIn, 
+    signUp, 
+    open, 
+    setOpen, 
+    openLogin, 
+    setOpenLogin, 
+    username, 
+    setUsername, 
+    password, 
+    setPassword, 
+    email, 
+    setEmail
+}) {
 
-    const [open, setOpen] = useState(false);
-    const [openLogin, setOpenLogin] = useState(false)
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    
-
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((authUser) => {
-            if(authUser){
-                // if we login
-                setUser(authUser)
-            } else {
-                // if we logout
-                setUser(null)
-            }
-        })
-        return () => {
-            unsubscribe()
-        }
-    }, [user, username])
-
-    const signUp = (e) => {
-        e.preventDefault()
-        auth.createUserWithEmailAndPassword(email, password)
-        .then(authUser => {
-            return authUser.user.updateProfile({
-                displayName: username
-            })
-        })
-        .then(() => setOpen(false))
-        .catch((err) => alert(err.message))
-    }
-
-    const signIn = (e) => {
-        e.preventDefault()
-        auth.signInWithEmailAndPassword(email, password)
-        .then(() => setOpenLogin(false))
-        .catch((err) => alert(err.message))
-    }
 
     return (
         <div className='app__navbar sticky__barTop'>

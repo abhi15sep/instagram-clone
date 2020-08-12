@@ -9,8 +9,13 @@ function Post({user,imgUrl,avatarUrl,username,caption,postId}) {
 
     const [comments, setComments] = useState([])
     const [comment, setComment] = useState('')
-    
+    // const [userComment, setUserComment] = useState(user)
 
+
+    // useEffect(() => {
+    //     this.forceUpdate();
+    //     // return setUserComment(user)
+    // }, [user])
 
     useEffect(() => {
         // let unsubscribe;
