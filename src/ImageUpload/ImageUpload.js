@@ -63,7 +63,7 @@ function ImageUpload({username}) {
             
             <LinearProgress variant="determinate" className={uploadStyle.progress_bar} value={progress} />    
 
-            <Button onClick={uploadPost}>
+            <Button onClick={ image ? uploadPost : undefined}>
                 Upload
             </Button>
         </div>

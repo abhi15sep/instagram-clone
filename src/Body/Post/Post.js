@@ -24,7 +24,7 @@ function Post({user,imgUrl,avatarUrl,username,caption,postId}) {
                 })
             return unsubscribe
         }
-
+        
     }, [postId])
 
     const postComment = (e) => {

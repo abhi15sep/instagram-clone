@@ -7,7 +7,6 @@ import {db} from '../firebase'
 function Body({user}) {
 
     const [post, setPost] = useState([])
-    
 
     useEffect(()=>{
         db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
@@ -18,8 +17,12 @@ function Body({user}) {
         })
     }, [user])
 
+    useEffect(() => {
+        window.scrollTo(0,0)
+    }, [post])
+
     return (
-        <div className={bodyStyle.body}>
+        <div className={bodyStyle.body} id='post_wrapper'>
             {post.map( ({id, post}) => 
                 <Post
                     key={id}
