@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Post from './Post/Post'
-import './Body.css'
+import bodyStyle from './Body.module.css'
 import {db} from '../firebase'
 
 
@@ -19,7 +19,7 @@ function Body({user}) {
     }, [user])
 
     return (
-        <div className='body'>
+        <div className={bodyStyle.body}>
             {post.map( ({id, post}) => 
                 <Post
                     key={id}

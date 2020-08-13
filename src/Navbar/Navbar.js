@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from './instagramLogo.png'
-import './Navbar.css'
+import navStyle from './Navbar.module.css'
 import {Modal, Button, Grid, TextField, Fade, Backdrop, ButtonGroup, Avatar} from '@material-ui/core';
 import {AccountCircle, VpnKeyRounded, Email} from '@material-ui/icons';
 import { auth } from '../firebase';
@@ -24,8 +24,8 @@ function Navbar({
 
 
     return (
-        <div className='app__navbar sticky__barTop'>
-            <img className='navbar__logo' alt='' src={Logo} />
+        <div className={`${navStyle.app__navbar} ${navStyle.sticky__barTop}`}>
+            <img className={navStyle.navbar__logo} alt='' src={Logo} />
             
 
             {/* modal Sign up */}
@@ -39,10 +39,10 @@ function Navbar({
                 BackdropProps={{timeout: 500}}
             >
             <Fade in={open}>
-                <div className='modal'>
+                <div className={navStyle.modal}>
                     <center>
-                        <img className='navbar__logo' alt='' src={Logo} />
-                        <div className='form__wrapper'>
+                        <img className={navStyle.navbar__logo} alt='' src={Logo} />
+                        <div className={navStyle.form__wrapper}>
                             <form onSubmit={signUp}>
                             <Grid container spacing={1} alignItems="flex-end">
                                 <Grid item>
@@ -77,7 +77,9 @@ function Navbar({
                                     />
                                 </Grid>
                             </Grid>
-                            {errorMessage ? <p style={{color: 'red'}}>{errorMessage}</p> : undefined}
+
+                            {errorMessage ? <p style={{color: 'red'}}>{errorMessage}</p> : ''}
+
                             <Button type='submit' className='modal__submit' variant="outlined" color="primary">
                                 Register
                             </Button>
@@ -99,10 +101,10 @@ function Navbar({
                 BackdropProps={{timeout: 500}}
             >
             <Fade in={openLogin}>
-                <div className='modal'>
+                <div className={navStyle.modal}>
                     <center>
-                        <img className='navbar__logo' alt='' src={Logo} />
-                        <div className='form__wrapper'>
+                        <img className={navStyle.navbar__logo} alt='' src={Logo} />
+                        <div className={navStyle.form__wrapper}>
                             <form onSubmit={signIn}>
                             <Grid container spacing={1} alignItems="flex-end">
                                 <Grid item>
@@ -126,8 +128,10 @@ function Navbar({
                                     />
                                 </Grid>
                             </Grid>
-                            {errorMessage ? <p style={{color: 'red'}}>{errorMessage}</p> : undefined}
-                            <Button type='submit' className='modal__submit' variant="outlined" color="primary">
+
+                            {errorMessage ? <p style={{color: 'red'}}>{errorMessage}</p> : ''}
+
+                            <Button type='submit' className={navStyle.modal__submit} variant="outlined" color="primary">
                                 Login
                             </Button>
                             </form>
@@ -139,7 +143,10 @@ function Navbar({
 
             {user ? (
                 <div style={{display: 'flex'}}>
-                    <Button className='navbar__logout' color='secondary' size='small' variant="contained" onClick={() => auth.signOut()}>
+                    <Button  color='secondary' size='small' variant="contained" 
+                        onClick={() => auth.signOut()}
+                        className={navStyle.navbar__logout}
+                    >
                         Logout
                     </Button>
                     <Avatar 
@@ -150,10 +157,10 @@ function Navbar({
                 </div>
                 ) : (
                 <ButtonGroup variant="contained" aria-label="contained primary button group">
-                    <Button className='navbar__login' size='small' onClick={() => setOpenLogin(true)}>
+                    <Button className={navStyle.navbar__login} size='small' onClick={() => setOpenLogin(true)}>
                         sign in
                     </Button>
-                    <Button className='navbar__login' size='small' onClick={() => setOpen(true)}>
+                    <Button className={navStyle.navbar__login} size='small' onClick={() => setOpen(true)}>
                         Sign Up
                     </Button>
                 </ButtonGroup>

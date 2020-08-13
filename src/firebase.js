@@ -1,7 +1,5 @@
 import firebase from 'firebase'
 
-// import {API_KEY, DATABASE, STORAGE} from './note.js'
-
 const firebaseApp = firebase.initializeApp({
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: "instagram-clone-84853.firebaseapp.com",

@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import { Button, LinearProgress, IconButton, Input } from '@material-ui/core'
-import './ImageUpload.css'
 import {storage, db} from '../firebase'
 import firebase from 'firebase'
 import { PhotoCamera } from '@material-ui/icons'
+import uploadStyle from './imageUpload.module.css'
 
 function ImageUpload({username}) {
 
     const [image, setImage] = useState(null)
-    // const [url, setUrl] = useState('')
     const [progress, setProgress] = useState(0)
     const [caption, setCaption] = useState('')
 
@@ -19,7 +18,7 @@ function ImageUpload({username}) {
         
     }
 
-    const uploadPost = (e) => {
+    const uploadPost = () => {
         const uploadTask = storage.ref(`images/${image.name}`).put(image)
 
         uploadTask.on('state_changed', (snapshot) => {
@@ -31,7 +30,7 @@ function ImageUpload({username}) {
                 storage.ref('images').child(image.name).getDownloadURL()
                 .then(url => {
                     db.collection('posts').add({
-timestamp: firebase.firestore.FieldValue.serverTimestamp()                        ,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                         caption: caption,
                         imgUrl: url,
                         username: username
@@ -40,33 +39,30 @@ timestamp: firebase.firestore.FieldValue.serverTimestamp()                      
                     setCaption('')
                     setImage(null)
                 })
-                
             }
         )
     }
 
     return (
-        <div className='upload__bar sticky__barBot'>
-            
-            <div className='input__wrapper'>
-                {/* <TextField className='upload__text' autoComplete='off' label="Enter a caption here" 
-                    onChange={(e) => setCaption(e.target.value)} 
-                    value={caption}
-                /> */}
-                <Input value={caption} onChange={(e) => setCaption(e.target.value)} className='upload__text' autoComplete='off' placeholder="Enter a caption here" inputProps={{ 'aria-label': 'description' }} />
-                <input style={{flex: '0', display: 'none'}} accept="video/*,image/*" id="icon-button-file" onChange={uploadImg} type="file" />
+        <div className={`${uploadStyle.upload__bar} ${uploadStyle.sticky__barBot}`}>
+            <div className={uploadStyle.input__wrapper}>
+                <input style={{flex: '0', display: 'none'}} accept="video/*,image/*" id="icon-button-file"  type="file" 
+                    onChange={uploadImg}
+                />
                 <label htmlFor="icon-button-file">
                     <IconButton color="primary" aria-label="upload picture" component="span">
                     <PhotoCamera />
                     </IconButton>
                 </label>
+                <Input value={caption}  className={uploadStyle.upload__text}   inputProps={{ 'aria-label': 'description' }} 
+                    onChange={(e) => setCaption(e.target.value)}
+                    autoComplete='off'
+                    placeholder="Enter a caption here"
+                />
             </div>
-            <LinearProgress variant="determinate" className='progress_bar' value={progress} />    
-            {/* <input type='text' placeholder='Enter a caption..' 
-                onChange={(e) => setCaption(e.target.value)} 
-                value={caption} 
-            /> */}
-            {/* <input type='file' accept="video/*,image/*"  /> */}
+            
+            <LinearProgress variant="determinate" className={uploadStyle.progress_bar} value={progress} />    
+
             <Button onClick={uploadPost}>
                 Upload
             </Button>

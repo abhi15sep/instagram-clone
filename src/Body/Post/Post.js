@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Post.css';
+import postStyle from './Post.module.css';
 import { Avatar, IconButton } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { db } from '../../firebase';
@@ -9,16 +9,9 @@ function Post({user,imgUrl,avatarUrl,username,caption,postId}) {
 
     const [comments, setComments] = useState([])
     const [comment, setComment] = useState('')
-    // const [userComment, setUserComment] = useState(user)
-
-
-    // useEffect(() => {
-    //     this.forceUpdate();
-    //     // return setUserComment(user)
-    // }, [user])
 
     useEffect(() => {
-        // let unsubscribe;
+        
         if(postId){
             const unsubscribe = db.collection('posts').doc(postId)
                 .collection('comments')
@@ -44,36 +37,38 @@ function Post({user,imgUrl,avatarUrl,username,caption,postId}) {
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 })
         setComment('')
-        console.log('clicked');
     }
 
     return (
-        <div className='post'>
+        <div className={postStyle.post}>
 
             {/* Header = Avatar + username + option */}
-            <div className='post__header'>
+            <div className={postStyle.post__header}>
                 <Avatar 
                     src={avatarUrl||''}
                     alt={username}
-                    className='header__avatar'
+                    className={postStyle.header__avatar}
                 >{username.slice(0,1).toUpperCase()}</Avatar>
-                <h4 className='header__username'>{username}</h4>
-                <IconButton className='header__button' aria-label="settings">
+                <h4 className={postStyle.header__username}>{username}</h4>
+                <IconButton className={postStyle.header__button} aria-label="settings">
                     <MoreVertIcon />
                 </IconButton>
             </div>
 
             {/* Post Image */}
-            {(imgUrl.includes('.mp4')) ? 
-                (<video type="video/webm" controls={true} src={imgUrl} autoPlay={true} loop={true} className='post__img post__video' />) : 
-                (<img 
-                    className='post__img'
+            {(imgUrl.includes('.mp4')) 
+                ?(<video type="video/webm" controls={true} src={imgUrl} autoPlay={true} loop={true}  
+                    className={`${postStyle.post__img} ${postStyle.post__video}`}
+                />) 
+                :(<img 
+                    className={postStyle.post__img}
                     src={imgUrl}
                     alt='' 
                 />)
             }
+
             {/* caption = username + caption */}
-            <h5 className='caption__user'><b>{username} </b>{caption}</h5>
+            <h5 className={postStyle.caption__user}><b>{username} </b>{caption}</h5>
             
             {/* Icon = like + comment + send + save */}
             
@@ -81,38 +76,41 @@ function Post({user,imgUrl,avatarUrl,username,caption,postId}) {
             
             {/* username + caption */}
             {/* all comments */}
-            <div style={{paddingLeft: '20px'}}>
+            <div style={{paddingLeft: '20px', paddingTop: '5px'}}>
             {
                 comments.map(({comment, id}) => {
-                    return (<h5 key={id} className='caption__user'>
+                    return (<h5 key={id} className={postStyle.caption__user}>
                         <b>{comment.username} </b>{comment.text}
                     </h5>)
                 })
             }</div>
-            {/* timestamp comment */}
-            {/* comment form = input + postButton */}
-            { user && (<form className='post__commentBox' onSubmit={postComment}>
-                <Avatar 
-                    src={avatarUrl||''}
-                    alt={username}
-                    className='comment__avatar'
-                >{String(user.displayName).slice(0,1).toUpperCase()}</Avatar>
-                <input
-                    className='post__input'
-                    type='text'
-                    placeholder={`Comment as ${String(user.displayName)}...`}
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                />
-                <button
-                    disabled={!comment}
-                    className='post__button'
-                    type='submit'
-                    onClick={postComment}
-                >
-                    Post
-                </button>
-            </form>)}
+
+            {/* comment form = avatar + input + postButton */}
+            { user 
+                && (<form className={postStyle.post__commentBox} onSubmit={postComment}>
+                        <Avatar 
+                            src={avatarUrl||''}
+                            alt={username}
+                            className={postStyle.comment__avatar}
+                        >{String(user.displayName).slice(0,1).toUpperCase()}</Avatar>
+
+                        <input
+                            className={postStyle.post__input}
+                            type='text'
+                            placeholder={`Comment as ${String(user.displayName)}...`}
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                        />
+                        
+                        <button
+                            disabled={!comment}
+                            className={postStyle.post__button}
+                            type='submit'
+                            onClick={postComment}
+                        >Post</button>
+
+                    </form>)
+            }
         </div>
     )
 }

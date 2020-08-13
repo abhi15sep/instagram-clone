@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import './App.css';
+import appStyle from './App.module.css';
 import {Navbar} from './Navbar/Navbar'
 import Body from './Body/Body'
 import ImageUpload from './ImageUpload/ImageUpload';
@@ -53,7 +53,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={appStyle.App}>
 
         {/* NAVBAR */}
         <Navbar user={user}
@@ -76,7 +76,10 @@ function App() {
         <Body user={user}/>
 
         {/* ImageUpload */}
-        {user ? (<ImageUpload username={user.displayName} />) : (<div className='upload__bar sticky__barBot'><h3>you must login to upload</h3></div>)}
+        {user 
+            ? (<ImageUpload username={user.displayName} />) 
+            : (<div className='upload__bar sticky__barBot'><h3>you must login to upload</h3></div>)
+        }
         
     </div>
   )

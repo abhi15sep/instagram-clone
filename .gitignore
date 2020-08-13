@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-/src/note.js
 # testing
 /coverage
 .env
