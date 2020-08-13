@@ -5,7 +5,7 @@
 /src/note.js
 # testing
 /coverage
-
+.env
 # production
 /build
 .firebase
