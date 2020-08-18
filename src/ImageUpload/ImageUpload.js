@@ -4,9 +4,11 @@ import {storage, db} from '../firebase'
 import firebase from 'firebase'
 import { PhotoCamera } from '@material-ui/icons'
 import uploadStyle from './imageUpload.module.css'
+import { useStateValue } from '../StateProvider/StateProvider'
 
-function ImageUpload({username}) {
+function ImageUpload() {
 
+    const [{user}] = useStateValue()
     const [image, setImage] = useState(null)
     const [progress, setProgress] = useState(0)
     const [caption, setCaption] = useState('')
@@ -33,7 +35,7 @@ function ImageUpload({username}) {
                         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                         caption: caption,
                         imgUrl: url,
-                        username: username
+                        username: user.displayName
                     })
                     setProgress(0)
                     setCaption('')

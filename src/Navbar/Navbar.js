@@ -1,27 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Logo from './instagramLogo.png'
 import navStyle from './Navbar.module.css'
 import {Modal, Button, Grid, TextField, Fade, Backdrop, ButtonGroup, Avatar} from '@material-ui/core';
 import {AccountCircle, VpnKeyRounded, Email} from '@material-ui/icons';
 import { auth } from '../firebase';
+import { useStateValue } from '../StateProvider/StateProvider';
 
-function Navbar({
-    user, 
-    signIn, 
-    signUp, 
-    open, 
-    setOpen, 
-    openLogin, 
-    setOpenLogin, 
-    username, 
-    setUsername, 
-    password, 
-    setPassword, 
-    email, 
-    setEmail,
-    errorMessage
-}) {
+function Navbar() {
 
+    const [{user}] = useStateValue()
+
+    const [open, setOpen] = useState(false);
+    const [openLogin, setOpenLogin] = useState(false)
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [errorMessage, setErrorMessage] = useState('')
+
+    // SIGN UP 
+    const signUp = (e) => {
+        e.preventDefault()
+        auth.createUserWithEmailAndPassword(email, password)
+        .then(authUser => {
+            return authUser.user.updateProfile({
+                displayName: username
+            })
+        })
+        .then(() => setOpen(false))
+        .catch((err) => setErrorMessage(err.message))
+    }
+
+    // SIGN IN
+    const signIn = (e) => {
+        e.preventDefault()
+        auth.signInWithEmailAndPassword(email, password)
+        .then(() => setOpenLogin(false))
+        .catch((err) => setErrorMessage(err.message))
+    }
+    
+    const logout = () => {
+        if(user){
+            auth.signOut()
+        }
+    }
 
     return (
         <div className={`${navStyle.app__navbar} ${navStyle.sticky__barTop}`}>
@@ -49,7 +71,7 @@ function Navbar({
                                     <AccountCircle />
                                 </Grid>
                                 <Grid item>
-                                    <TextField required autoComplete='off' id="input-with-icon-grid" label="Username" 
+                                    <TextField required autoComplete='off' id="input-with-icon-grid-username" label="Username" 
                                         value={username} 
                                         onChange={(e) => setUsername(e.target.value)} 
                                     />
@@ -60,7 +82,7 @@ function Navbar({
                                     <Email />
                                 </Grid>
                                 <Grid item>
-                                    <TextField required id="input-with-icon-grid" label="Email" 
+                                    <TextField required id="input-with-icon-grid-email" label="Email" 
                                         value={email} 
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
@@ -71,7 +93,7 @@ function Navbar({
                                     <VpnKeyRounded />
                                 </Grid>
                                 <Grid item>
-                                    <TextField type='password' required id="input-with-icon-grid" label="Password" 
+                                    <TextField type='password' required id="input-with-icon-grid-pass" label="Password" 
                                         value={password} 
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
@@ -144,7 +166,7 @@ function Navbar({
             {user ? (
                 <div style={{display: 'flex'}}>
                     <Button  color='secondary' size='small' variant="contained" 
-                        onClick={() => auth.signOut()}
+                        onClick={logout}
                         className={navStyle.navbar__logout}
                     >
                         Logout

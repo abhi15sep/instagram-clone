@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import Post from './Post/Post'
 import bodyStyle from './Body.module.css'
 import {db} from '../firebase'
+import { useStateValue } from '../StateProvider/StateProvider'
 
 
-function Body({user}) {
-
+function Body() {
+    
+    const [{user}] = useStateValue()
     const [post, setPost] = useState([])
 
     useEffect(()=>{
